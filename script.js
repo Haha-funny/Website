@@ -1,1 +1,1 @@
-const n=document.getElementById("name"),h=document.getElementById("hint");n.onclick=async()=>{await navigator.clipboard.writeText(".hahafunny");h.textContent="Copied!";setTimeout(()=>h.textContent="Click to copy",1500)}
+function copyDiscord(){navigator.clipboard.writeText('.hahafunny');let c=document.getElementById('copy');c.textContent='Copied!';setTimeout(()=>c.textContent='Click to copy',1500)}
