@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>.hahafunny</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Inter,sans-serif;
+    height:100vh;
+    overflow:hidden;
+
+    background:
+        linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.55)),
+        url("background.jpg") center center/cover no-repeat;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    text-align:center;
+    animation:fade 1.2s ease;
+}
+
+.avatar{
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    object-fit:cover;
+
+    border:2px solid rgba(255,255,255,.35);
+
+    box-shadow:
+    0 0 30px rgba(0,0,0,.45);
+
+    transition:.35s;
+}
+
+.avatar:hover{
+    transform:scale(1.04);
+}
+
+.username{
+    margin-top:25px;
+    color:white;
+
+    font-size:42px;
+    font-weight:300;
+    letter-spacing:.08em;
+
+    cursor:pointer;
+    transition:.25s;
+    user-select:none;
+}
+
+.username:hover{
+    color:#d0d0d0;
+    text-shadow:0 0 15px rgba(255,255,255,.35);
+}
+
+.copy{
+    margin-top:12px;
+    color:rgba(255,255,255,.55);
+    font-size:14px;
+    opacity:0;
+    transition:.25s;
+}
+
+.username:hover + .copy{
+    opacity:1;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:none;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+
+<img src="avatar.png" class="avatar">
+
+<div class="username" onclick="copyDiscord()">
+.hahafunny
+</div>
+
+<div class="copy" id="copyText">
+Click to copy
+</div>
+
+</div>
+
+<script>
+
+function copyDiscord(){
+
+navigator.clipboard.writeText(".hahafunny");
+
+const text=document.getElementById("copyText");
+
+text.innerHTML="Copied!";
+
+setTimeout(()=>{
+text.innerHTML="Click to copy";
+},1500);
+
+}
+
+</script>
+
+</body>
+</html>
