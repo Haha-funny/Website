@@ -1,0 +1,1 @@
+const n=document.getElementById("name"),h=document.getElementById("hint");n.onclick=async()=>{await navigator.clipboard.writeText(".hahafunny");h.textContent="Copied!";setTimeout(()=>h.textContent="Click to copy",1500)}
