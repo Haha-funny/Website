@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | hahafunny</title>
+  <meta name="theme-color" content="#0d1117">
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="assets/profile.png">
+</head>
+<body>
+  <main class="container">
+    <div class="profile-card">
+      <div class="avatar-wrapper">
+        <img 
+          src="assets/profile.png" 
+          alt=".hahafunny avatar" 
+          class="avatar-image"
+          width="112"
+          height="112"
+        >
+      </div>
+
+      <h1 class="display-name">404 - Lost in Space</h1>
+      
+      <section class="bio-section">
+        <p>The page you are looking for doesn't exist or has been moved.</p>
+      </section>
+
+      <div class="actions">
+        <a href="/" class="btn-discord">
+          <span>Return Home</span>
+        </a>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> <a href="/">hahafunny.org</a></p>
+    </footer>
+  </main>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

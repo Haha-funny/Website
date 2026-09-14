@@ -1,1 +1,0 @@
-function copyDiscord(){navigator.clipboard.writeText('.hahafunny');let c=document.getElementById('copy');c.textContent='Copied!';setTimeout(()=>c.textContent='Click to copy',1500)}

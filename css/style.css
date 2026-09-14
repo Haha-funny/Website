@@ -1,0 +1,258 @@
+/* ==========================================================================
+   PERSONAL WEBSITE STYLESHEET
+   Domain: hahafunny.org
+   Designed for GitHub Pages: Clean, responsive, minimal & dark-mode first.
+   ========================================================================== */
+
+/* --- CSS Variables / Color Palette (Easily customize your theme here) --- */
+:root {
+  --bg-color: #0d1117;          /* Dark canvas background */
+  --card-bg: #161b22;           /* Elevated card container */
+  --card-border: #30363d;       /* Subtle border for structure */
+  --text-primary: #f0f6fc;      /* High-contrast crisp white/off-white */
+  --text-secondary: #8b949e;    /* Muted secondary text for handles & tags */
+  --text-muted: #6e7681;        /* Subtle footer/helper text */
+  --discord-color: #5865f2;     /* Official Discord Blurple */
+  --discord-hover: #4752c4;     /* Darker Discord blurple on hover */
+  --badge-bg: #21262d;          /* Pill badge background */
+  --badge-border: #363b42;      /* Pill badge border */
+  --badge-hover: #292e36;       /* Pill badge hover */
+  --focus-ring: rgba(88, 101, 242, 0.45);
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --transition-speed: 0.2s;
+  --border-radius-card: 16px;
+  --border-radius-btn: 10px;
+  --border-radius-full: 9999px;
+}
+
+/* --- Base Reset & Box Sizing --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+}
+
+/* --- Layout Container --- */
+.container {
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+}
+
+/* --- Main Card --- */
+.profile-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--border-radius-card);
+  padding: 40px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- Avatar / Profile Picture --- */
+.avatar-wrapper {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  margin-bottom: 20px;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius-full);
+  object-fit: cover;
+  border: 3px solid var(--card-border);
+  display: block;
+  transition: border-color var(--transition-speed) ease;
+}
+
+.avatar-image:hover {
+  border-color: var(--discord-color);
+}
+
+/* Online indicator dot */
+.status-indicator {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  background-color: #23a55a; /* Discord online green */
+  border: 3px solid var(--card-bg);
+  border-radius: var(--border-radius-full);
+}
+
+/* --- Profile Details --- */
+.display-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+/* Discord Handle Pill (Click to copy) */
+.discord-handle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--border-radius-full);
+  margin-bottom: 20px;
+  cursor: pointer;
+  user-select: all;
+  transition: background-color var(--transition-speed) ease,
+              color var(--transition-speed) ease,
+              border-color var(--transition-speed) ease;
+}
+
+.discord-handle:hover {
+  background-color: var(--badge-hover);
+  color: var(--text-primary);
+  border-color: var(--text-muted);
+}
+
+.discord-handle svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.copy-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
+/* --- Bio Section --- */
+.bio-section {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-bottom: 28px;
+  max-width: 380px;
+}
+
+/* --- Action Button --- */
+.actions {
+  width: 100%;
+}
+
+.btn-discord {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background-color: var(--discord-color);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 13px 20px;
+  border-radius: var(--border-radius-btn);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+}
+
+.btn-discord:hover {
+  background-color: var(--discord-hover);
+  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.35);
+}
+
+.btn-discord:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.btn-discord svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* --- Toast Notification (for copy to clipboard) --- */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  background-color: #238636;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: var(--border-radius-full);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+  z-index: 100;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* --- Footer --- */
+.footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-speed) ease;
+}
+
+.footer a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 480px) {
+  body {
+    padding: 20px 12px;
+  }
+
+  .profile-card {
+    padding: 32px 20px;
+  }
+
+  .display-name {
+    font-size: 1.35rem;
+  }
+}
