@@ -8,7 +8,7 @@
   <title>hahafunny</title>
   <meta name="title" content="hahafunny">
   <meta name="description" content="Join my Community For R6 Accs, R6 Carries and Programs.">
-  <meta name="theme-color" content="#060713">
+  <meta name="theme-color" content="#030508">
 
   <!-- Open Graph / Discord Embed Meta Tags -->
   <meta property="og:type" content="website">
@@ -22,16 +22,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
-  <!-- Stylesheet (cache-busted query parameter) -->
-  <link rel="stylesheet" href="css/style.css?v=20260915-4">
+  <!-- Stylesheet (cache-busted) -->
+  <link rel="stylesheet" href="css/style.css?v=20260915-5">
   <link rel="icon" type="image/png" href="assets/profile.png">
 
-  <!-- Critical styles for guaranteed ambient glow rendering -->
+  <!-- Critical styles for guaranteed ambient teal background rendering & fixed button width -->
   <style>
     body {
-      background-color: var(--bg-canvas, #060713) !important;
-      background-image: var(--ambient-grad, radial-gradient(ellipse 110% 70% at 50% 15%, rgba(124, 58, 237, 0.28) 0%, rgba(37, 99, 235, 0.16) 45%, transparent 80%)) !important;
+      background-color: #030508 !important;
+      background-image: radial-gradient(ellipse 110% 70% at 50% 15%, rgba(13, 148, 136, 0.32) 0%, rgba(6, 182, 212, 0.18) 45%, transparent 80%) !important;
       background-attachment: fixed !important;
+    }
+    .discord-handle {
+      width: 180px !important;
+      height: 38px !important;
+      box-sizing: border-box !important;
     }
   </style>
 </head>
@@ -62,7 +67,7 @@
       <!-- ==========================================================
            2. USERNAME & HANDLE
            Default: shows only username (.hahafunny)
-           Hover: spells out 'click to copy' in thick font
+           Hover: spells out 'click to copy' directly without widget resizing
            ========================================================== -->
       <h1 class="display-name">hahafunny</h1>
 
@@ -82,13 +87,13 @@
 
       <!-- ==========================================================
            3. SHORT BIO / TAGLINE
-           ========================================================== -->
+           ========================================================= -->
       <section class="bio-section">
         <p>Join my Community For R6 Accs, R6 Carries and Programs.</p>
       </section>
 
       <!-- ==========================================================
-           4. PRIMARY ACTION BUTTON: JOIN DISCORD
+           4. PRIMARY ACTION BUTTON: OFFICIAL DISCORD COLOR (#5865F2)
            ========================================================== -->
       <div class="actions">
         <a 
@@ -105,17 +110,6 @@
         </a>
       </div>
 
-    </div>
-
-    <!-- Theme Switcher: Explore Blue & Purple vs Black & Teal -->
-    <div class="theme-selector" role="group" aria-label="Select background theme">
-      <span class="theme-label">Style:</span>
-      <button type="button" class="theme-chip active" id="btnThemePurple" aria-pressed="true">
-        <span class="chip-color chip-purple-blue"></span> Blue &amp; Purple
-      </button>
-      <button type="button" class="theme-chip" id="btnThemeTeal" aria-pressed="false">
-        <span class="chip-color chip-teal"></span> Black &amp; Teal
-      </button>
     </div>
 
     <!-- Footer -->
@@ -136,13 +130,12 @@
     const toast = document.getElementById('toast');
     let toastTimeout;
 
-    // Hover effect: spells out 'click to copy' in thick font
+    // Snappy, direct hover effect without lag or widget shift
     handleBtn.addEventListener('mouseenter', () => {
       handleText.textContent = 'click to copy';
       handleText.classList.add('thick-text');
     });
 
-    // Mouse leave: reverts to '.hahafunny'
     handleBtn.addEventListener('mouseleave', () => {
       handleText.textContent = '.hahafunny';
       handleText.classList.remove('thick-text');
@@ -164,41 +157,11 @@
             handleText.textContent = '.hahafunny';
             handleText.classList.remove('thick-text');
           }
-        }, 1800);
+        }, 1600);
       } catch (err) {
-        console.error('Failed to copy text: ', err);
+        console.error('Failed to copy: ', err);
       }
     });
-
-    // Theme Switcher Logic (Blue & Purple vs Black & Teal)
-    const btnPurple = document.getElementById('btnThemePurple');
-    const btnTeal = document.getElementById('btnThemeTeal');
-
-    function setTheme(theme) {
-      if (theme === 'teal') {
-        document.body.classList.add('theme-teal');
-        btnTeal.classList.add('active');
-        btnTeal.setAttribute('aria-pressed', 'true');
-        btnPurple.classList.remove('active');
-        btnPurple.setAttribute('aria-pressed', 'false');
-      } else {
-        document.body.classList.remove('theme-teal');
-        btnPurple.classList.add('active');
-        btnPurple.setAttribute('aria-pressed', 'true');
-        btnTeal.classList.remove('active');
-        btnTeal.setAttribute('aria-pressed', 'false');
-      }
-      try { localStorage.setItem('hhf_bg_theme', theme); } catch(e) {}
-    }
-
-    btnPurple.addEventListener('click', () => setTheme('purple'));
-    btnTeal.addEventListener('click', () => setTheme('teal'));
-
-    // Restore saved user choice if set
-    try {
-      const savedTheme = localStorage.getItem('hhf_bg_theme');
-      if (savedTheme) setTheme(savedTheme);
-    } catch(e) {}
   </script>
 </body>
 </html>
