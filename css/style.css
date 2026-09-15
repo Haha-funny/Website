@@ -1,28 +1,28 @@
 /* ==========================================================================
    PERSONAL WEBSITE STYLESHEET
    Domain: hahafunny.org
-   Designed for GitHub Pages: Clean, responsive, minimal & dark-mode first.
+   Clean, responsive, frosted-glass dark aesthetic with ambient blue/purple glow
    ========================================================================== */
 
-/* --- CSS Variables / Color Palette (Easily customize your theme here) --- */
+/* --- CSS Variables / Color Palette --- */
 :root {
-  --bg-color: #0d1117;          /* Dark canvas background */
-  --card-bg: #161b22;           /* Elevated card container */
-  --card-border: #30363d;       /* Subtle border for structure */
+  --bg-color: #080914;          /* Deep canvas background */
+  --card-bg: rgba(18, 23, 36, 0.78); /* Frosted dark card */
+  --card-border: rgba(255, 255, 255, 0.08); /* Subtle border */
   --text-primary: #f0f6fc;      /* High-contrast crisp white/off-white */
-  --text-secondary: #8b949e;    /* Muted secondary text for handles & tags */
-  --text-muted: #6e7681;        /* Subtle footer/helper text */
+  --text-secondary: #94a3b8;    /* Muted secondary text */
+  --text-muted: #64748b;        /* Subtle footer text */
   --discord-color: #5865f2;     /* Official Discord Blurple */
   --discord-hover: #4752c4;     /* Darker Discord blurple on hover */
-  --badge-bg: #21262d;          /* Pill badge background */
-  --badge-border: #363b42;      /* Pill badge border */
-  --badge-hover: #292e36;       /* Pill badge hover */
+  --badge-bg: rgba(255, 255, 255, 0.04);
+  --badge-border: rgba(255, 255, 255, 0.1);
+  --badge-hover: rgba(255, 255, 255, 0.08);
   --focus-ring: rgba(88, 101, 242, 0.45);
   
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --transition-speed: 0.2s;
-  --border-radius-card: 16px;
-  --border-radius-btn: 10px;
+  --border-radius-card: 20px;
+  --border-radius-btn: 12px;
   --border-radius-full: 9999px;
 }
 
@@ -34,13 +34,14 @@
 }
 
 html, body {
-  min-height: 100%;
+  min-height: 100vh;
   font-family: var(--font-sans);
   background-color: var(--bg-color);
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 body {
@@ -48,26 +49,85 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 24px 16px;
+  padding: 32px 16px;
+  position: relative;
+}
+
+/* --- Ambient Glow & Gradient Background (Verse style) --- */
+.bg-ambient-gradient {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(98, 0, 234, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 85% 45%, rgba(139, 92, 246, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 15% 75%, rgba(59, 130, 246, 0.14) 0%, transparent 60%),
+    var(--bg-color);
+  z-index: -2;
+  pointer-events: none;
+}
+
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(95px);
+  opacity: 0.26;
+  pointer-events: none;
+}
+
+.orb-1 {
+  width: 500px;
+  height: 500px;
+  background: #6200ea; /* Purple ambient glow */
+  top: 5%;
+  left: 10%;
+}
+
+.orb-2 {
+  width: 440px;
+  height: 440px;
+  background: #3b82f6; /* Blue ambient glow */
+  bottom: 10%;
+  right: 10%;
+}
+
+.orb-3 {
+  width: 360px;
+  height: 360px;
+  background: #8b5cf6; /* Indigo / Violet ambient accent */
+  top: 45%;
+  right: 25%;
 }
 
 /* --- Layout Container --- */
 .container {
   width: 100%;
-  max-width: 480px;
+  max-width: 460px;
   margin: auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* --- Main Card --- */
+/* --- Main Card (Frosted Glass / Elevated) --- */
 .profile-card {
-  background-color: var(--card-bg);
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--card-border);
   border-radius: var(--border-radius-card);
-  padding: 40px 32px;
+  padding: 44px 32px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(99, 102, 241, 0.08);
 }
 
 /* --- Avatar / Profile Picture --- */
@@ -83,13 +143,14 @@ body {
   height: 100%;
   border-radius: var(--border-radius-full);
   object-fit: cover;
-  border: 3px solid var(--card-border);
+  border: 3px solid rgba(255, 255, 255, 0.1);
   display: block;
-  transition: border-color var(--transition-speed) ease;
+  transition: border-color var(--transition-speed) ease, transform var(--transition-speed) ease;
 }
 
 .avatar-image:hover {
   border-color: var(--discord-color);
+  transform: scale(1.02);
 }
 
 /* Online indicator dot */
@@ -100,65 +161,88 @@ body {
   width: 18px;
   height: 18px;
   background-color: #23a55a; /* Discord online green */
-  border: 3px solid var(--card-bg);
+  border: 3px solid #101424;
   border-radius: var(--border-radius-full);
 }
 
 /* --- Profile Details --- */
 .display-name {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--text-primary);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-/* Discord Handle Pill (Click to copy) */
+/* Discord Handle Pill */
 .discord-handle {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background-color: var(--badge-bg);
   border: 1px solid var(--badge-border);
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 500;
-  padding: 6px 14px;
+  padding: 8px 18px;
   border-radius: var(--border-radius-full);
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   cursor: pointer;
-  user-select: all;
+  user-select: none;
+  min-width: 154px;
   transition: background-color var(--transition-speed) ease,
               color var(--transition-speed) ease,
-              border-color var(--transition-speed) ease;
+              border-color var(--transition-speed) ease,
+              transform var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
 }
 
 .discord-handle:hover {
   background-color: var(--badge-hover);
-  color: var(--text-primary);
-  border-color: var(--text-muted);
+  color: #ffffff;
+  border-color: var(--discord-color);
+  box-shadow: 0 0 16px rgba(88, 101, 242, 0.25);
+  transform: translateY(-1px);
 }
 
 .discord-handle svg {
-  width: 14px;
-  height: 14px;
+  width: 15px;
+  height: 15px;
   fill: currentColor;
   flex-shrink: 0;
+  transition: fill var(--transition-speed) ease;
 }
 
-.copy-hint {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-left: 4px;
+/* Default state: only username is visible */
+.discord-handle .handle-name {
+  display: inline;
+  font-weight: 500;
+}
+
+/* Hover state: says "click to copy" in thick/bold font */
+.discord-handle .handle-hover-action {
+  display: none;
+  font-weight: 800; /* Thick font */
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.discord-handle:hover .handle-name {
+  display: none;
+}
+
+.discord-handle:hover .handle-hover-action {
+  display: inline;
 }
 
 /* --- Bio Section --- */
 .bio-section {
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 0.98rem;
+  line-height: 1.6;
   margin-bottom: 28px;
-  max-width: 380px;
+  max-width: 360px;
 }
 
 /* --- Action Button --- */
@@ -182,12 +266,14 @@ body {
   border: 1px solid transparent;
   cursor: pointer;
   transition: background-color var(--transition-speed) ease,
-              box-shadow var(--transition-speed) ease;
+              box-shadow var(--transition-speed) ease,
+              transform var(--transition-speed) ease;
 }
 
 .btn-discord:hover {
   background-color: var(--discord-hover);
-  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.35);
+  box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+  transform: translateY(-1px);
 }
 
 .btn-discord:focus-visible {
@@ -209,11 +295,12 @@ body {
   background-color: #238636;
   color: #ffffff;
   font-size: 0.875rem;
-  font-weight: 500;
-  padding: 8px 16px;
+  font-weight: 600;
+  padding: 9px 20px;
   border-radius: var(--border-radius-full);
   opacity: 0;
   visibility: hidden;
+  box-shadow: 0 8px 24px rgba(35, 134, 54, 0.35);
   transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
   z-index: 100;
 }
@@ -249,10 +336,10 @@ body {
   }
 
   .profile-card {
-    padding: 32px 20px;
+    padding: 34px 20px;
   }
 
   .display-name {
-    font-size: 1.35rem;
+    font-size: 1.4rem;
   }
 }
