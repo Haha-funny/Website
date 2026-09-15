@@ -8,7 +8,7 @@
   <title>hahafunny</title>
   <meta name="title" content="hahafunny">
   <meta name="description" content="Join my Community For R6 Accs, R6 Carries and Programs.">
-  <meta name="theme-color" content="#070712">
+  <meta name="theme-color" content="#060713">
 
   <!-- Open Graph / Discord Embed Meta Tags -->
   <meta property="og:type" content="website">
@@ -23,29 +23,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 
   <!-- Stylesheet (cache-busted query parameter) -->
-  <link rel="stylesheet" href="css/style.css?v=20260915-3">
+  <link rel="stylesheet" href="css/style.css?v=20260915-4">
   <link rel="icon" type="image/png" href="assets/profile.png">
 
   <!-- Critical styles for guaranteed ambient glow rendering -->
   <style>
     body {
-      background-color: #070712 !important;
-      background-image: 
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124, 58, 237, 0.38) 0%, transparent 60%),
-        radial-gradient(ellipse 65% 50% at 90% 35%, rgba(59, 130, 246, 0.32) 0%, transparent 55%),
-        radial-gradient(ellipse 65% 50% at 10% 75%, rgba(147, 51, 234, 0.32) 0%, transparent 55%),
-        radial-gradient(ellipse 80% 40% at 50% 100%, rgba(37, 99, 235, 0.25) 0%, transparent 60%) !important;
+      background-color: var(--bg-canvas, #060713) !important;
+      background-image: var(--ambient-grad, radial-gradient(ellipse 110% 70% at 50% 15%, rgba(124, 58, 237, 0.28) 0%, rgba(37, 99, 235, 0.16) 45%, transparent 80%)) !important;
       background-attachment: fixed !important;
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Ambient Orbs (Verse style ambient lighting) -->
-  <div class="bg-orb-container" aria-hidden="true">
-    <div class="bg-orb bg-orb-purple"></div>
-    <div class="bg-orb bg-orb-blue"></div>
-    <div class="bg-orb bg-orb-indigo"></div>
+  <!-- Single Unified Ambient Halo (Smooth, uniform, zero scattered spots) -->
+  <div class="ambient-glow-wrapper" aria-hidden="true">
+    <div class="ambient-glow-core"></div>
   </div>
 
   <main class="container">
@@ -62,14 +56,13 @@
           width="112"
           height="112"
         >
-        <!-- Online status indicator dot -->
         <span class="status-indicator" title="Online"></span>
       </div>
 
       <!-- ==========================================================
            2. USERNAME & HANDLE
-           Default state: shows only username (.hahafunny)
-           Hover state: textfield spells out 'click to copy' in thick font
+           Default: shows only username (.hahafunny)
+           Hover: spells out 'click to copy' in thick font
            ========================================================== -->
       <h1 class="display-name">hahafunny</h1>
 
@@ -114,6 +107,17 @@
 
     </div>
 
+    <!-- Theme Switcher: Explore Blue & Purple vs Black & Teal -->
+    <div class="theme-selector" role="group" aria-label="Select background theme">
+      <span class="theme-label">Style:</span>
+      <button type="button" class="theme-chip active" id="btnThemePurple" aria-pressed="true">
+        <span class="chip-color chip-purple-blue"></span> Blue &amp; Purple
+      </button>
+      <button type="button" class="theme-chip" id="btnThemeTeal" aria-pressed="false">
+        <span class="chip-color chip-teal"></span> Black &amp; Teal
+      </button>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
       <p>&copy; <span id="year"></span> <a href="https://hahafunny.org">hahafunny.org</a></p>
@@ -123,7 +127,7 @@
   <!-- Feedback Toast for copying username -->
   <div class="toast" id="toast" role="status" aria-live="polite">Copied username to clipboard!</div>
 
-  <!-- Interactive JavaScript: dynamic year, hover text swap, and copy action -->
+  <!-- Interactive JavaScript -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -132,19 +136,19 @@
     const toast = document.getElementById('toast');
     let toastTimeout;
 
-    // Hover effect: when hovering, text changes to 'click to copy' in thick font
+    // Hover effect: spells out 'click to copy' in thick font
     handleBtn.addEventListener('mouseenter', () => {
       handleText.textContent = 'click to copy';
       handleText.classList.add('thick-text');
     });
 
-    // Revert back to '.hahafunny' on mouse leave
+    // Mouse leave: reverts to '.hahafunny'
     handleBtn.addEventListener('mouseleave', () => {
       handleText.textContent = '.hahafunny';
       handleText.classList.remove('thick-text');
     });
 
-    // Click to copy action
+    // Copy to clipboard
     handleBtn.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText('.hahafunny');
@@ -165,6 +169,36 @@
         console.error('Failed to copy text: ', err);
       }
     });
+
+    // Theme Switcher Logic (Blue & Purple vs Black & Teal)
+    const btnPurple = document.getElementById('btnThemePurple');
+    const btnTeal = document.getElementById('btnThemeTeal');
+
+    function setTheme(theme) {
+      if (theme === 'teal') {
+        document.body.classList.add('theme-teal');
+        btnTeal.classList.add('active');
+        btnTeal.setAttribute('aria-pressed', 'true');
+        btnPurple.classList.remove('active');
+        btnPurple.setAttribute('aria-pressed', 'false');
+      } else {
+        document.body.classList.remove('theme-teal');
+        btnPurple.classList.add('active');
+        btnPurple.setAttribute('aria-pressed', 'true');
+        btnTeal.classList.remove('active');
+        btnTeal.setAttribute('aria-pressed', 'false');
+      }
+      try { localStorage.setItem('hhf_bg_theme', theme); } catch(e) {}
+    }
+
+    btnPurple.addEventListener('click', () => setTheme('purple'));
+    btnTeal.addEventListener('click', () => setTheme('teal'));
+
+    // Restore saved user choice if set
+    try {
+      const savedTheme = localStorage.getItem('hhf_bg_theme');
+      if (savedTheme) setTheme(savedTheme);
+    } catch(e) {}
   </script>
 </body>
 </html>

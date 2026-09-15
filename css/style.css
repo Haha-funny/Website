@@ -1,30 +1,53 @@
 /* ==========================================================================
    PERSONAL WEBSITE STYLESHEET
    Domain: hahafunny.org
-   Professional ambient blue & purple gradient background (Verse style)
+   Smooth, uniform ambient lighting (2-3 colors max, no scattered spots)
+   Supports Blue & Purple and Black & Teal ambient colorways
    ========================================================================== */
 
+/* --- Default Theme: Blue & Purple --- */
 :root {
-  --bg-color: #070712;
-  --card-bg: rgba(15, 19, 32, 0.78);
+  --bg-canvas: #060713;
+  --ambient-grad: radial-gradient(ellipse 110% 70% at 50% 15%, rgba(124, 58, 237, 0.28) 0%, rgba(37, 99, 235, 0.16) 45%, transparent 80%);
+  --glow-color-1: #7c3aed;  /* Rich Purple */
+  --glow-color-2: #2563eb;  /* Electric Blue */
+  --card-bg: rgba(14, 18, 30, 0.78);
   --card-border: rgba(255, 255, 255, 0.1);
+  --card-glow: rgba(124, 58, 237, 0.16);
+
   --text-primary: #f0f6fc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
+
   --discord-color: #5865f2;
   --discord-hover: #4752c4;
   --badge-bg: rgba(255, 255, 255, 0.05);
   --badge-border: rgba(255, 255, 255, 0.12);
-  --badge-hover: rgba(255, 255, 255, 0.09);
   --focus-ring: rgba(88, 101, 242, 0.5);
-  
+
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --transition-speed: 0.2s;
+  --transition-speed: 0.25s;
   --border-radius-card: 20px;
   --border-radius-btn: 12px;
   --border-radius-full: 9999px;
 }
 
+/* --- Theme 2: Black & Teal Tones --- */
+body.theme-teal {
+  --bg-canvas: #030508;
+  --ambient-grad: radial-gradient(ellipse 110% 70% at 50% 15%, rgba(13, 148, 136, 0.32) 0%, rgba(6, 182, 212, 0.18) 45%, transparent 80%);
+  --glow-color-1: #0d9488;  /* Deep Teal */
+  --glow-color-2: #06b6d4;  /* Electric Cyan / Bright Teal */
+  --card-bg: rgba(8, 18, 22, 0.82);
+  --card-border: rgba(45, 212, 191, 0.18);
+  --card-glow: rgba(13, 148, 136, 0.22);
+  --discord-color: #0d9488;
+  --discord-hover: #0f766e;
+  --badge-border: rgba(45, 212, 191, 0.2);
+  --focus-ring: rgba(13, 148, 136, 0.5);
+}
+
+/* --- Reset & Base --- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -33,18 +56,14 @@
 
 html {
   min-height: 100%;
-  background-color: var(--bg-color);
+  background-color: #060713;
 }
 
 body {
   min-height: 100vh;
   font-family: var(--font-sans);
-  background-color: var(--bg-color);
-  background-image: 
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(124, 58, 237, 0.38) 0%, transparent 60%),
-    radial-gradient(ellipse 65% 50% at 90% 35%, rgba(59, 130, 246, 0.32) 0%, transparent 55%),
-    radial-gradient(ellipse 65% 50% at 10% 75%, rgba(147, 51, 234, 0.32) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(37, 99, 235, 0.25) 0%, transparent 60%);
+  background-color: var(--bg-canvas);
+  background-image: var(--ambient-grad);
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: var(--text-primary);
@@ -58,51 +77,34 @@ body {
   padding: 32px 16px;
   position: relative;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, background-image 0.4s ease;
 }
 
-/* --- Floating Ambient Orbs (Verse style ambient lighting) --- */
-.bg-orb-container {
+/* --- Single Unified Ambient Halo (Smooth, uniform, zero scattered spots) --- */
+.ambient-glow-wrapper {
   position: fixed;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 0;
 }
 
-.bg-orb {
-  position: absolute;
+.ambient-glow-core {
+  width: 760px;
+  height: 760px;
   border-radius: 50%;
-  filter: blur(100px);
+  filter: blur(140px); /* Heavy Gaussian blur creates a seamless, silky ambient aura */
+  opacity: 0.65;
+  background: radial-gradient(circle at 45% 45%, var(--glow-color-1) 0%, var(--glow-color-2) 55%, transparent 80%);
   pointer-events: none;
-  opacity: 0.55;
+  transform: translateZ(0);
+  transition: background 0.4s ease, opacity 0.4s ease;
 }
 
-.bg-orb-purple {
-  width: 550px;
-  height: 550px;
-  background: #7c3aed; /* Vibrant Purple */
-  top: -120px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.bg-orb-blue {
-  width: 500px;
-  height: 500px;
-  background: #2563eb; /* Vibrant Electric Blue */
-  bottom: -60px;
-  right: 5%;
-}
-
-.bg-orb-indigo {
-  width: 440px;
-  height: 440px;
-  background: #6366f1; /* Deep Indigo / Purple */
-  top: 40%;
-  left: 5%;
-}
-
-/* --- Layout Container --- */
+/* --- Main Content Container --- */
 .container {
   width: 100%;
   max-width: 460px;
@@ -111,25 +113,26 @@ body {
   z-index: 1;
 }
 
-/* --- Main Card (Frosted Glass / Elevated) --- */
+/* --- Profile Card --- */
 .profile-card {
   background: var(--card-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--card-border);
   border-radius: var(--border-radius-card);
-  padding: 44px 32px;
+  padding: 44px 34px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-shadow: 
-    0 24px 60px rgba(0, 0, 0, 0.6),
-    0 0 45px rgba(124, 58, 237, 0.15),
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    0 0 45px var(--card-glow),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* --- Avatar / Profile Picture --- */
+/* --- Avatar --- */
 .avatar-wrapper {
   position: relative;
   width: 112px;
@@ -152,7 +155,6 @@ body {
   transform: scale(1.02);
 }
 
-/* Online indicator dot */
 .status-indicator {
   position: absolute;
   bottom: 4px;
@@ -160,11 +162,11 @@ body {
   width: 18px;
   height: 18px;
   background-color: #23a55a;
-  border: 3px solid #0f1320;
+  border: 3px solid #0c101c;
   border-radius: var(--border-radius-full);
 }
 
-/* --- Profile Details --- */
+/* --- Username Heading --- */
 .display-name {
   font-size: 1.65rem;
   font-weight: 700;
@@ -173,7 +175,7 @@ body {
   margin-bottom: 8px;
 }
 
-/* Discord Handle Pill (Interactive Copy Button) */
+/* --- Copy Username Button (In-Place Hover Swap) --- */
 .discord-handle {
   display: inline-flex;
   align-items: center;
@@ -198,10 +200,10 @@ body {
 }
 
 .discord-handle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.12);
   color: #ffffff;
-  border-color: #5865f2;
-  box-shadow: 0 0 20px rgba(88, 101, 242, 0.35);
+  border-color: var(--discord-color);
+  box-shadow: 0 0 20px var(--card-glow);
   transform: translateY(-1px);
 }
 
@@ -218,7 +220,7 @@ body {
 }
 
 .discord-handle .handle-text.thick-text {
-  font-weight: 800; /* Thick font */
+  font-weight: 800; /* Thick/heavy font on hover */
   color: #ffffff;
   letter-spacing: -0.01em;
 }
@@ -232,7 +234,7 @@ body {
   max-width: 360px;
 }
 
-/* --- Action Button --- */
+/* --- Primary Discord Button --- */
 .actions {
   width: 100%;
 }
@@ -259,7 +261,7 @@ body {
 
 .btn-discord:hover {
   background-color: var(--discord-hover);
-  box-shadow: 0 8px 24px rgba(88, 101, 242, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 24px var(--card-glow);
   transform: translateY(-1px);
 }
 
@@ -297,9 +299,71 @@ body {
   visibility: visible;
 }
 
+/* --- Theme Switcher (Lets you test Blue/Purple vs Black/Teal) --- */
+.theme-selector {
+  margin-top: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5px 12px;
+  border-radius: var(--border-radius-full);
+}
+
+.theme-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 2px;
+}
+
+.theme-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+}
+
+.theme-chip:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.theme-chip.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.chip-color {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chip-purple-blue {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+}
+
+.chip-teal {
+  background: linear-gradient(135deg, #0d9488, #06b6d4);
+}
+
 /* --- Footer --- */
 .footer {
-  margin-top: 24px;
+  margin-top: 14px;
   text-align: center;
   font-size: 0.8rem;
   color: var(--text-muted);
@@ -320,6 +384,12 @@ body {
 @media (max-width: 480px) {
   body {
     padding: 20px 12px;
+  }
+
+  .ambient-glow-core {
+    width: 480px;
+    height: 480px;
+    filter: blur(100px);
   }
 
   .profile-card {
