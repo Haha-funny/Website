@@ -13,9 +13,19 @@
   <script>
     (function() {
       var path = window.location.pathname.toLowerCase().replace(/^\/+|\/+$/g, '');
-      var targets = ['dc', 'gg', 'disc', 'discord'];
-      if (targets.indexOf(path) !== -1) {
+      var discordTargets = ['dc', 'gg', 'disc', 'discord'];
+      var ytTargets = ['yt', 'youtube'];
+      var ttTargets = ['tt', 'tiktok'];
+      var igTargets = ['ig', 'instagram', 'insta'];
+
+      if (discordTargets.indexOf(path) !== -1) {
         window.location.replace("https://discord.gg/38FWDppfva");
+      } else if (ytTargets.indexOf(path) !== -1) {
+        window.location.replace("https://www.youtube.com/@HahaFunny302");
+      } else if (ttTargets.indexOf(path) !== -1) {
+        window.location.replace("https://www.tiktok.com/@hahafunny.302");
+      } else if (igTargets.indexOf(path) !== -1) {
+        window.location.replace("https://www.instagram.com/hahafunny.302/");
       }
     })();
   </script>
